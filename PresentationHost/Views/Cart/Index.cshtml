@@ -1,0 +1,132 @@
+﻿@model Cart
+<section class="breadcrumb_part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <h2>سبد خرید</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb part end-->
+<!--================Cart Area =================-->
+<section class="cart_area section_padding" dir="rtl">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">محصول</th>
+                            <th scope="col">قیمت</th>
+                            <th scope="col">تعداد</th>
+                            <th scope="col">جمع کل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartLines)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="~/@item.Product.Medias[0].Path" alt="" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@item.Product.Name</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>@item.Product.Price تومان</h5>
+                                </td>
+                                <td>
+                                    <div class="product_count" dir="ltr">
+                                        <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
+                                        <input class="input-number" type="text" value="@item.Quantity" min="1" max="10" data-price="@item.Product.Price">
+                                        <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>@(item.Product.Price * item.Quantity) تومان</h5>
+                                </td>
+                                <td>
+                                    @*<form method="post">
+                                <button type="submit" class="btn btn-danger" value="@item.Product.ProductID" name="productId">X</button>
+                                </form>*@
+                                    @*<form method="post" action="RemoveFromCart">
+                                        <button type="submit" class="btn btn-danger" value="@item.Product.ProductID" name="productId">X</button>
+                                    </form>*@
+                                    <form method="post">
+                                        <input type="hidden" name="productId" value="@item.Product.ProductID" />
+                                        <input type="hidden" name="quantity" value="@item.Quantity" min="1" max="10" data-price="@item.Product.Price" class="input-number" />
+                                        <input type="hidden" name="finalPrice" value="@(item.Product.Price * item.Quantity)" readonly class="final-price" />
+                                        <button type="submit" class="btn btn-danger" value="remove" name="action">X</button>
+                                    </form>
+
+                                </td>
+                                <td>
+                                    @*<div class="add_to_cart">
+                                <input type="submit" value="✏" class="btn btn-warning" />
+                                </div>*@
+                                    @*<form method="post" action="EditPrice">
+                                <button type="submit" class="btn btn-warning" value="@item.Product.ProductID" name="update">✏</button>
+                                </form>*@
+                                    <form method="post" id="updateForm">
+                                        @*<input type="hidden" name="productId" value="@item.Product.ProductID" />
+                                    <input type="number" name="quantity" value="@item.Quantity" min="1" max="10" data-price="@item.Product.Price" class="input-number" />
+                                    <input type="number" name="finalPrice" value="@(item.Product.Price * item.Quantity)" readonly class="final-price" />*@
+                                        <input type="hidden" name="productId" value="@item.Product.ProductID" />
+                                        <input type="hidden" name="quantity" value="@item.Quantity" min="1" max="10" data-price="@item.Product.Price" class="input-number" />
+                                        <input type="hidden" name="finalPrice" value="@(item.Product.Price * item.Quantity)" readonly class="final-price" />
+                                        <button type="submit" class="btn btn-warning">✏</button>
+                                    </form>
+
+                                    <script>
+                                        // Add an event listener to the input element that listens for the 'input' event
+                                        document.querySelector('.input-number').addEventListener('input', updateFinalPrice);
+
+                                        // Event listener function
+                                        function updateFinalPrice() {
+                                            // Get the unit price and quantity from the input element
+                                            const unitPrice = this.dataset.price;
+                                            const quantity = this.value;
+
+                                            // Calculate the final price
+                                            const finalPrice = unitPrice * quantity;
+
+                                            // Update the final price on the page
+                                            document.querySelector('.final-price').value = finalPrice;
+                                        }
+                                    </script>
+
+
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>مجموع</h5>
+                            </td>
+                            <td>
+                                <h5>@Model.GetTotalPrice() تومان</h5>
+                            </td>
+                            <td>
+                                <a class="btn_1" href="~/Checkout/Index">تایید نهایی</a>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="checkout_btn_inner float-right">
+                    <a class="btn_1 checkout_btn_1" href="~/Product/Search">ادامه خرید</a>
+                    <a class="btn_1 checkout_btn_1" href="~/Home/Index">بازگشت</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

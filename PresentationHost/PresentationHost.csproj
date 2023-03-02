@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Home\about.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pillow.Core.ApplicationService\Pillow.Core.ApplicationService.csproj" />
+    <ProjectReference Include="..\Pillow.Core.Contracts\Pillow.Core.Contracts.csproj" />
+    <ProjectReference Include="..\Pillow.Infrastruture.Data\Pillow.Infrastruture.Data.csproj" />
+    <ProjectReference Include="..\Pillow.Infrastruture.Sql\Pillow.Infrastruture.Sql.csproj" />
+  </ItemGroup>
+
+</Project>
